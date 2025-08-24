@@ -8,7 +8,6 @@ import (
 	"os/signal"
 	"strconv"
 	"sync"
-	"syscall"
 )
 
 func Generator(ctx context.Context, ch chan<- int, wg *sync.WaitGroup) {
@@ -71,7 +70,7 @@ func main() {
 
 	// Ожидание сигнала
 	interrupt := make(chan os.Signal, 1)
-	signal.Notify(interrupt, os.Interrupt, syscall.SIGTERM)
+	signal.Notify(interrupt, os.Interrupt)
 
 	<-interrupt
 	fmt.Println("interrupt signal received")
