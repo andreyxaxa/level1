@@ -15,19 +15,21 @@ func main() {
 	// Пишем
 	go func() {
 		for {
-			ch <- "some string"
-			time.Sleep(700 * time.Millisecond)
+			select {
+			// Закрываем канал и прекращаем писать, как только срабатывает таймаут
+			case <-timeout:
+				fmt.Println("timeout exceeded")
+				close(ch)
+				return
+			default:
+				ch <- "some string"
+				time.Sleep(700 * time.Millisecond)
+			}
 		}
 	}()
 
-	for {
-		select {
-		// Читаем
-		case v := <-ch:
-			fmt.Println(v)
-		case <-timeout:
-			fmt.Println("timeout exceeded")
-			return
-		}
+	// Читаем
+	for v := range ch {
+		fmt.Println(v)
 	}
 }
