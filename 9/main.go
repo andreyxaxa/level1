@@ -33,7 +33,7 @@ func main() {
 	generate(ch1, numbers)
 	multiply(ch1, ch2)
 
-	// Выводим данные
+	// Выводим данные. 'ch2' закрывается в 'multiply', поэтому цикл корректно завершится, как только будут прочитаны все данные.
 	for v := range ch2 {
 		fmt.Println(v)
 	}
