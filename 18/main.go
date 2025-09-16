@@ -15,6 +15,10 @@ func (c *AtomicCounter) inc() {
 	c.value.Add(1)
 }
 
+func (c *AtomicCounter) printValue() {
+	fmt.Println(c.value.Load())
+}
+
 // Mutex
 type MutexCounter struct {
 	value int
@@ -25,6 +29,10 @@ func (c *MutexCounter) inc() {
 	c.mu.Lock()
 	defer c.mu.Unlock()
 	c.value++
+}
+
+func (c *MutexCounter) printValue() {
+	fmt.Println(c.value)
 }
 
 // go run main.go -race
@@ -58,6 +66,6 @@ func main() {
 	}
 
 	wg.Wait()
-	fmt.Println(ac.value.Load())
-	fmt.Println(mc.value)
+	ac.printValue()
+	mc.printValue()
 }
