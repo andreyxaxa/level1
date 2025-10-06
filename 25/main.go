@@ -8,7 +8,7 @@ import (
 func sleep(duration time.Duration) {
 	t := time.NewTimer(duration)
 
-	// небуф. канал - блокирующее чтение
+	// небуф. канал
 	<-t.C
 }
 
